@@ -9,8 +9,8 @@ def beat_gen(song, moves):
     signal = np.frombuffer(signal, "int16")
     signal = signal.astype(float)
     fs = spf.getframerate()
-    movess = [np.sum(np.absolute(np.asarray(signal[j:j+fs], dtype=float)))/fs
-              for j in range(0, (int(len(signal)/2)-fs), fs)]
+    movess = [np.sum(np.absolute(np.asarray(signal[j:j+2*fs], dtype=float)))/fs
+              for j in range(0, int(len(signal)-fs), 2*fs)]
     movess = np.asarray(movess, dtype=float)
     movess = np.round((movess/max(movess))*moves)
     movess[movess == 0] = 1
@@ -18,12 +18,12 @@ def beat_gen(song, moves):
     movess = np.round((movess/max(movess))*moves)
     print(np.sum(movess))
     beats = []
-    for j in range(0, int(len(signal)/2-fs), fs):
-        i = movess[int(j/fs)]
+    for j in range(0, int(len(signal)-fs), 2*fs):
+        i = movess[int(j/(2*fs))]
         beats.append(
-            [j+k + (np.where(signal[j+k:j+k+int(fs/i)] ==
+            [j+k + (np.where(signal[j+k:j+k+int(2*fs/i)] ==
                            max(signal[j+k:j+k+int(fs/i)]))[0][0])
-                           for k in range(0, fs, int(fs/i))])
+                           for k in range(0, 2*fs, int((2*fs)/i))])
        
     beats = np.hstack(beats)
-    return np.asarray(beats, dtype=float)/fs
+    return np.asarray(beats, dtype=float)/(2*fs)
