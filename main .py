@@ -2,11 +2,11 @@ from moviepy.editor import *
 from clipsGen import clips_gen
 from beatMaker import beat_gen
 # a list with your images
-img = ["images/0.jpg", "images/1.png", "images/2.jpg"] 
+img = ["0.jpg", "1.png", "2.jpg"] 
 
 # you need your song in both mp3 and wav format
-your_song_wav = "song/Undertale- Megalovania.wav"
-your_song_mp2 = "song/Undertale- Megalovania.mp3"
+your_song_wav = "Undertale- Megalovania.wav"
+your_song_mp2 = "Undertale- Megalovania.mp3"
 
 # the max number of picture's swaps in 1 second
 movement_rate = 25
