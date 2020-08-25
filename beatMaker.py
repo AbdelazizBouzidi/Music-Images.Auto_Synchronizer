@@ -13,14 +13,14 @@ def beat_gen(song, moves):
               for j in range(0, int(len(signal)-fs), 2*fs)]
     movess = np.asarray(movess, dtype=float)
     movess = np.round((movess/max(movess))*moves)
-    movess[movess == 0] = 1
     movess = movess - (movess/5) 
     movess = np.round((movess/max(movess))*moves)
-    print(np.sum(movess))
+    print(movess)
     beats = []
     for j in range(0, int(len(signal)-fs), 2*fs):
         i = movess[int(j/(2*fs))]
-        beats.append(
+        if i > 0 :
+          beats.append(
             [j+k + (np.where(signal[j+k:j+k+int(2*fs/i)] ==
                            max(signal[j+k:j+k+int(fs/i)]))[0][0])
                            for k in range(0, 2*fs, int((2*fs)/i))])
